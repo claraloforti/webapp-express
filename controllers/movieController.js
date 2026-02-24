@@ -10,7 +10,7 @@ function index(req, res) {
     connection.query(sql, (err, results) => {
         if (err) return res.status(500).json({ error: 'Database query failed' });
 
-        // Creo copia dei risultato con modifica path imgs
+        // Mappo i risultati del DB aggiungendo il percorso dell'immagine
         const movies = results.map(movie => {
             return {
                 ...movie,
@@ -23,7 +23,7 @@ function index(req, res) {
 
 }
 
-// GET (show) per ottenere un post
+// GET (show) per ottenere un film
 function show(req, res) {
     // Recupero id da param dinamico
     const { id } = req.params;
@@ -33,7 +33,7 @@ function show(req, res) {
 
     const reviewsSql = 'SELECT * FROM reviews WHERE movie_id = ?';
 
-    // Chiamata a DB principale per recuperare il film
+    // Chiamata al DB per recuperare il film
     connection.query(moviesSql, [id], (err, movieResults) => {
         if (err) return res.status(500).json({ error: 'Database query failed' });
         if (movieResults.length === 0) return res.status(404).json({ error: 'Movie not found' });
@@ -43,7 +43,7 @@ function show(req, res) {
         // Aggiungo path img dal middleware
         movie.image = req.imagePath + movie.image;
 
-        // Seconda chiamata a DB per recupero reviews del film
+        // Seconda chiamata al DB per recupero reviews del film
         connection.query(reviewsSql, [id], (err, reviewsResults) => {
             if (err) return res.status(500).json({ error: 'Database query failed' });
 
