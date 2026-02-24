@@ -2,28 +2,27 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT;
 
-// Importo middleware cors
-const cors = require("cors");
-// Middleware per il CORS
-app.use(cors({
-    origin: 'http://localhost:5173'
-}));
-
 // Importo router dei film
 const movieRouter = require('./routers/movieRouter');
 
+// Middlewares globali
+// Importo middleware cors
+const cors = require("cors");
 // Importo middleware di gestiore errore 500
 const errorsHandler = require("./middlewares/errorsHandler");
 // Importo middleware di gestione errore 404
 const notFound = require("./middlewares/notFound");
-// Importo middelware di gestione path imgs
+// Importo middleware di gestione path imgs
 const imagePathMiddleware = require("./middlewares/imagePath");
 
-// Attivo middelware di gestione path imgs
+// Registro middleware per il CORS che abilita richieste dal frontend
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
+// Registro middleware per gestire path immagini
 app.use(imagePathMiddleware);
-// Attivo cartella public per uso file statici
+// Registro cartella public per uso file statici
 app.use(express.static('public'));
-
 // Registro il body-parser per "application/json"
 app.use(express.json());
 
