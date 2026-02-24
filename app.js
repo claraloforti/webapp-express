@@ -14,9 +14,9 @@ const movieRouter = require('./routers/movieRouter');
 
 // Importo middleware di gestiore errore 500
 const errorsHandler = require("./middlewares/errorsHandler");
-//Importo middleware di gestione errore 404
+// Importo middleware di gestione errore 404
 const notFound = require("./middlewares/notFound");
-// import del middelware di gestione di path imgs
+// Importo middelware di gestione path imgs
 const imagePathMiddleware = require("./middlewares/imagePath");
 
 // Attivo middelware di gestione path imgs
@@ -27,7 +27,7 @@ app.use(express.static('public'));
 // Registro il body-parser per "application/json"
 app.use(express.json());
 
-// rotta home APP
+// Rotta home APP
 app.get('/api', (req, res) => {
     res.send("<h1>Rotta home App dei film</h1>")
 })
