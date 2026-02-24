@@ -19,12 +19,13 @@ const imagePathMiddleware = require("./middlewares/imagePath");
 app.use(cors({
     origin: 'http://localhost:5173'
 }));
+// Registro il body-parser per "application/json"
+app.use(express.json());
 // Registro middleware per gestire path immagini
 app.use(imagePathMiddleware);
 // Registro cartella public per uso file statici
 app.use(express.static('public'));
-// Registro il body-parser per "application/json"
-app.use(express.json());
+
 
 // Rotta home APP
 app.get('/api', (req, res) => {
