@@ -56,4 +56,25 @@ function show(req, res) {
     });
 }
 
-module.exports = { index, show }
+// POST (store) per aggiungere una recensione al film
+function store(req, res) {
+
+    // Recupero id da param dinamico
+    const { id } = req.params;
+
+    // Recupero le info dal body della req
+    const { name, vote, text } = req.body;
+
+    // Query SQL per inserire nuova review nel DB
+    const sql = 'INSERT INTO reviews (text, name, vote, movie_id) VALUES (?, ?, ?, ?)';
+
+    // Eseguo la query
+    connection.query(sql, [text, name, vote, id], (err, results) => {
+        if (err) return res.status(500).json({ error: 'Database query failed' });
+        res.status(201);
+        res.json({ message: 'Review added', id: results.insertId });
+    });
+}
+
+
+module.exports = { index, show, store }
